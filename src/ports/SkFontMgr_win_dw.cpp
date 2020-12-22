@@ -15,6 +15,7 @@
 #include "include/core/SkTypes.h"
 #include "include/private/SkMutex.h"
 #include "include/private/SkTPin.h"
+#include "include/utils/uwp_exception.h"
 #include "src/core/SkEndian.h"
 #include "src/core/SkFontDescriptor.h"
 #include "src/core/SkTypefaceCache.h"
@@ -1328,6 +1329,11 @@ SK_API sk_sp<SkFontMgr> SkFontMgr_New_DirectWrite(IDWriteFactory* factory,
 
     const WCHAR* defaultFamilyName = L"";
     int defaultFamilyNameLen = 1;
+#if defined(WINUWP)
+    if (nullptr == fallback) {
+	  UWP_API_ERROR("NONCLIENTMETRICSW ");
+    }
+#else
     NONCLIENTMETRICSW metrics;
     metrics.cbSize = sizeof(metrics);
     if (nullptr == fallback) {
@@ -1336,6 +1342,7 @@ SK_API sk_sp<SkFontMgr> SkFontMgr_New_DirectWrite(IDWriteFactory* factory,
             defaultFamilyNameLen = LF_FACESIZE;
         }
     }
+#endif // defined(WINUWP)
 
     WCHAR localeNameStorage[LOCALE_NAME_MAX_LENGTH];
     const WCHAR* localeName = L"";

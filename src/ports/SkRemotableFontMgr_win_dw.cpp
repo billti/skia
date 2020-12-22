@@ -15,6 +15,7 @@
 #include "include/ports/SkRemotableFontMgr.h"
 #include "include/private/SkMutex.h"
 #include "include/private/SkTArray.h"
+#include "include/utils/uwp_exception.h"
 #include "src/ports/SkTypeface_win_dw.h"
 #include "src/utils/SkUTF.h"
 #include "src/utils/win/SkDWrite.h"
@@ -164,6 +165,9 @@ public:
     }
 
     static HRESULT getDefaultFontFamilyName(SkSMallocWCHAR* name) {
+#if defined(WINUWP)
+  UWP_API_ERROR("NONCLIENTMETRICSW ");
+#else
         NONCLIENTMETRICSW metrics;
         metrics.cbSize = sizeof(metrics);
         if (0 == SystemParametersInfoW(SPI_GETNONCLIENTMETRICS,
@@ -179,6 +183,7 @@ public:
         }
 
         return S_OK;
+#endif // defined(WINUWP)
     }
 
     SkRemotableFontIdentitySet* matchName(const char familyName[]) const override {

@@ -6,7 +6,7 @@
  */
 
 #include "include/core/SkTypes.h"
-#if defined(SK_BUILD_FOR_WIN)
+#if defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)
 
 #include "src/core/SkLeanWindows.h"
 
@@ -2034,4 +2034,4 @@ void SkXPSDevice::drawImageRect(const SkImage* image,
     paintWithShader.setShader(std::move(bitmapShader));
     this->drawRect(actualDst, paintWithShader);
 }
-#endif//defined(SK_BUILD_FOR_WIN)
+#endif//defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)

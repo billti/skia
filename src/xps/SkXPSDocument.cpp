@@ -6,7 +6,7 @@
  */
 
 #include "include/core/SkTypes.h"
-#if defined(SK_BUILD_FOR_WIN)
+#if defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)
 
 #include "include/docs/SkXPSDocument.h"
 
@@ -83,4 +83,4 @@ sk_sp<SkDocument> SkXPS::MakeDocument(SkWStream* stream,
            ? sk_make_sp<SkXPSDocument>(stream, dpi, std::move(factory))
            : nullptr;
 }
-#endif  // defined(SK_BUILD_FOR_WIN)
+#endif  // defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)

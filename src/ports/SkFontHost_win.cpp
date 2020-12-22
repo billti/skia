@@ -6,7 +6,7 @@
  */
 
 #include "include/core/SkTypes.h"
-#if defined(SK_BUILD_FOR_WIN)
+#if defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)
 
 #include "include/core/SkData.h"
 #include "include/core/SkFontMetrics.h"
@@ -2332,4 +2332,4 @@ private:
 
 sk_sp<SkFontMgr> SkFontMgr_New_GDI() { return sk_make_sp<SkFontMgrGDI>(); }
 
-#endif//defined(SK_BUILD_FOR_WIN)
+#endif//defined(SK_BUILD_FOR_WIN) && !defined(WINUWP)
